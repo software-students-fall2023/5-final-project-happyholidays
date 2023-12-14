@@ -10,6 +10,9 @@ function pick_random_background(){
     const selectedImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
     document.body.style.backgroundImage=`url(static/images/backgrounds/${selectedImage})`;
 }
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 function updateTimerDisplay() {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -126,9 +129,9 @@ function show_card(card){
         console.log(card);
         card.src = `static/images/card_back.webp`;
         last_card.src = `static/images/card_back.webp`;
-    },1000);
+    },600);
 }
-function handleSelectCard(evt){
+async function handleSelectCard(evt){
     const selected_card = evt.target;
     emphasis_card(selected_card);
     show_card(selected_card);
@@ -139,6 +142,7 @@ function handleSelectCard(evt){
             console.log('same card clicked');
         }
         else{
+            await delay(500);
             match(selected_card);
             curr_card=null;
             curr_duplicate=null;
