@@ -1,4 +1,5 @@
 const cards = [];
+let curr_cards = [];
 let curr_card = null;
 let curr_duplicate = null;
 function pick_random_background(){
@@ -24,11 +25,21 @@ function emphasis_card(card){
       });
     card.classList.add('emphasis');
 }
+function endgame(){
+    console.log('you win!');
+}
 function match(card){
     //cancle mathced cards. 
     const matched_pokemon = card.getAttribute('data-pokemon');
-    
-}
+    var matched_cards = document.querySelectorAll(`[data-pokemon='${matched_pokemon}']`);
+    matched_cards.forEach(card=>{
+        card.classList.add('hidden');
+    })
+    curr_cards=curr_cards.filter(elem=>elem!=matched_pokemon);
+    if (curr_cards.length===0){
+        endgame();
+    }
+}   
 function handleSelectCard(evt){
     const selected_card = evt.target;
     //console.log(curr_duplicate);
@@ -83,6 +94,7 @@ function pick_cards(n){
             cards.push(shuffled_cards[i]);
         }
         console.log(cards);
+        curr_cards=cards.slice();
         display_cards();
     }).catch(console.log);
 }
