@@ -26,13 +26,16 @@ function shuffle(array) {
     }
     return array;
 }
-function emphasis_card(card){
+function clear_emphasis(){
     //highlight the selected card. 
     var emphasized_cards = document.querySelectorAll('.emphasis');
     //ok so this will remove all previously emphasized cards. careful when call this func 
     emphasized_cards.forEach(function(element) {
         element.classList.remove('emphasis');
-      });
+    });
+}
+function emphasis_card(card){
+    clear_emphasis();
     card.classList.add('emphasis');
 }
 async function show_leading_board(){
@@ -104,9 +107,31 @@ function match(card){
     if (curr_cards.length===0){
         endgame();
     }
-}   
+} 
+function show_card(card){
+    if (curr_card===null || curr_duplicate===null){
+        return;
+    }
+    const curr_card_pokemon = card.getAttribute('data-pokemon');
+    const curr_card_duplicate = card.getAttribute('data-duplicate');
+    if (curr_card_pokemon===curr_card&&curr_card_duplicate===curr_duplicate){
+        return;
+    }
+    const curr_card_path = `static/images/cards/${curr_card_pokemon}`
+    const last_card = document.querySelector(`[data-pokemon='${curr_card}'][data-duplicate='${curr_duplicate}']`);
+    const last_card_path = `static/images/cards/${curr_card}`
+    card.src = curr_card_path;
+    last_card.src = last_card_path;
+    setTimeout(()=>{
+        console.log(card);
+        card.src = `static/images/card_back.webp`;
+        last_card.src = `static/images/card_back.webp`;
+    },1000);
+}
 function handleSelectCard(evt){
     const selected_card = evt.target;
+    emphasis_card(selected_card);
+    show_card(selected_card);
     //console.log(curr_duplicate);
     //console.log(selected_card.getAttribute('data-duplicate'));
     if (selected_card.getAttribute('data-pokemon') === curr_card){
@@ -115,13 +140,21 @@ function handleSelectCard(evt){
         }
         else{
             match(selected_card);
+            curr_card=null;
+            curr_duplicate=null;
             console.log('match!');
         }
     }
     else{
-        emphasis_card(selected_card);
-        curr_card=selected_card.getAttribute('data-pokemon');
-        curr_duplicate=selected_card.getAttribute('data-duplicate');
+        if (curr_card===null && curr_duplicate===null){
+            curr_card=selected_card.getAttribute('data-pokemon');
+            curr_duplicate=selected_card.getAttribute('data-duplicate');
+        }
+        else{
+            curr_card=null;
+            curr_duplicate=null;
+            clear_emphasis();
+        }
     }
 }
 function display_cards(){
@@ -130,7 +163,7 @@ function display_cards(){
     const doublecards = shuffle(cards.concat(cards));
     const added_cards=[];
     doublecards.forEach(card=>{
-        const card_url = `static/images/cards/${card}`;
+        const card_url = `static/images/card_back.webp`;
         const new_card = document.createElement('img');
         new_card.src=card_url;
         new_card.classList.add('card');
