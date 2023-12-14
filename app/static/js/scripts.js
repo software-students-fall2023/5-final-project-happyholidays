@@ -1,12 +1,22 @@
 const cards = [];
 let curr_cards = [];
+let seconds = 0;
 let curr_card = null;
 let curr_duplicate = null;
+let timeInterval;
 function pick_random_background(){
     //picks a random background
     const backgroundImages= ['pikachu_8bits.jpeg','pokeballs.jpeg','pokedex.png','starters.webp','surfing_pikachu.jpeg']
     const selectedImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
     document.body.style.backgroundImage=`url(static/images/backgrounds/${selectedImage})`;
+}
+function updateTimerDisplay() {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    document.getElementById('timerDisplay').innerText = formattedTime;
+    seconds++;
 }
 function shuffle(array) {
     // shuffle 
@@ -25,8 +35,63 @@ function emphasis_card(card){
       });
     card.classList.add('emphasis');
 }
+async function show_leading_board(){
+    const url = '/getRecord';
+    const leadingBoard = document.getElementById('leading-board');
+    try{
+        const res = await fetch(url);
+        const records = await res.json();
+        records.forEach((record)=>{
+            const record_section = document.createElement('p');
+            record_section.innerText = `${record.player} ------- ${record.time}`;
+            leadingBoard.appendChild(record_section);
+        })
+    }catch(e){
+        console.log(e);
+    }
+    const restart_game = document.createElement('a');
+    restart_game.innerHTML='<button>restart game</button>';
+    restart_game.url = '/';
+    leadingBoard.appendChild(restart_game);
+}
+function add_to_leading_board(time){
+    const inputfiled = document.getElementById('inputfield');
+    const nameinput = document.createElement('input');
+    nameinput.setAttribute('type', 'text');
+    nameinput.setAttribute('id', 'name-input');
+    const prompt = document.createElement('h3');
+    prompt.innerText = 'put your name to add to leading board!';
+    const add_btn = document.createElement('button');
+    add_btn.innerText = 'Add';
+    add_btn.addEventListener('click',async()=>{
+        let player = nameinput.value;
+        const url = '/addRecord';
+        const options = {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({player, time:time}),
+        }
+        try{
+            const res = await fetch(url, options);
+            const saved_data = await res.json();
+            console.log('data saved', saved_data);
+            inputfiled.style.display='none'
+            show_leading_board();
+        }catch(e){
+            console.log('error',e);
+        }
+    });
+    inputfiled.appendChild(prompt);
+    inputfiled.appendChild(nameinput);
+    inputfiled.appendChild(add_btn);
+}
 function endgame(){
     console.log('you win!');
+    clearInterval(timeInterval);
+    const currentTime = document.getElementById('timerDisplay').innerText;
+    add_to_leading_board(currentTime);
 }
 function match(card){
     //cancle mathced cards. 
@@ -102,6 +167,7 @@ function pick_cards(n){
 function main(){
     //main function to call after DOM load 
     pick_random_background();
+    timeInterval=setInterval(updateTimerDisplay, 1000);
     pick_cards(4);
 }
 document.addEventListener('DOMContentLoaded',main);
