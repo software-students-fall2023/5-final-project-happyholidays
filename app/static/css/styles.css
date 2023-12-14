@@ -1,0 +1,22 @@
+#title{
+    color: black;
+    background-color: white;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+.card{
+    display: inline-block;
+    width: 200px;
+    height: auto;
+    margin: 5px;
+}
+.card:hover{
+    transform: scale(1.1);
+}
+.emphasis{
+    border: 2px solid #bace02; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+.hidden{
+    display: none;
+}
