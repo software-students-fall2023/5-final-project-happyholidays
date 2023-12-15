@@ -26,6 +26,7 @@ jobs:
         pip install --user pipenv
         pipenv --python ${{ matrix.python-version }}
         pipenv install flask
+        pipenv install flask-cors
         pipenv install pymongo
         pipenv install pytest
         pipenv install --dev

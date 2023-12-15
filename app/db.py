@@ -13,5 +13,5 @@ def save_to_leading_board(player, time):
     })
     return new_record
 def get_leading_board():
-    all_records = collection.find()
+    all_records = collection.find({}, {'_id': 0})
     return all_records

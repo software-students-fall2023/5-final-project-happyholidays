@@ -46,10 +46,12 @@ async function show_leading_board(){
     const leadingBoard = document.getElementById('leading-board');
     try{
         const res = await fetch(url);
-        const records = await res.json();
+        const recordss = await res.json();
+        const records = recordss.records;
         records.forEach((record)=>{
             const record_section = document.createElement('p');
-            record_section.innerText = `${record.player} ------- ${record.time}`;
+            record_section.innerText = `${record.player} ------- ${record.record}`;
+            record_section.classList.add('record');
             leadingBoard.appendChild(record_section);
         })
     }catch(e){
@@ -57,7 +59,7 @@ async function show_leading_board(){
     }
     const restart_game = document.createElement('a');
     restart_game.innerHTML='<button>restart game</button>';
-    restart_game.url = '/';
+    restart_game.href = '/';
     leadingBoard.appendChild(restart_game);
 }
 function add_to_leading_board(time){
@@ -187,7 +189,10 @@ function display_cards(){
 function pick_cards(n){
     //pick 4 random cards 
     const cards_path = '/getCardList';
-    fetch(cards_path).then(res=>res.json())
+    fetch(cards_path,{
+        method: 'GET',
+        mode: 'cors',
+      }).then(res=>res.json())
     .then(data=>{
         const cardnames = data.cards;
         const shuffled_cards = shuffle(cardnames);

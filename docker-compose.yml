@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  webapp:
+  app:
     build: ./app
     ports:
       - "4000:4000"

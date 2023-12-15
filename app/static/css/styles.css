@@ -23,3 +23,7 @@
 .hidden{
     visibility: hidden;
 }
+.record{
+    color: black;
+    background-color: white;
+}
