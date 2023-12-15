@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, closed]
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+        pipenv --python ${{ matrix.python-version }}
+        pipenv install flask
+        pipenv install flask-cors
+        pipenv install pymongo
+        pipenv install pytest
+        pipenv install --dev
+    - name: Turn on 'editable' mode
+      run: |
+        pipenv install -e .
+    - name: Test with pytest
+      run: |
+        cd app
+        pipenv run python -m pytest test.py
+    

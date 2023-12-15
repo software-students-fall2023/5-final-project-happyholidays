@@ -4,6 +4,9 @@
     font-family: 'Times New Roman', Times, serif;
 
 }
+#timerDisplay{
+    background-color: white;
+}
 .card{
     display: inline-block;
     width: 200px;
@@ -14,9 +17,13 @@
     transform: scale(1.1);
 }
 .emphasis{
-    border: 2px solid #bace02; 
+    border: 3px solid #bace02; 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 .hidden{
-    display: none;
+    visibility: hidden;
+}
+.record{
+    color: black;
+    background-color: white;
 }
