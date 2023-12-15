@@ -36,5 +36,10 @@ def getAllRecord():
     records = db.get_leading_board()
     sorted_records = sorted(records, key=lambda x: datetime.strptime(x['record'], '%H:%M:%S'))
     return jsonify({'records':sorted_records[:10]})
+
+def create_app():
+    """return an app object"""
+    return app
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=4000)

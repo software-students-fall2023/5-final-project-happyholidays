@@ -11,7 +11,13 @@
     display: inline-block;
     width: 200px;
     height: auto;
-    margin: 5px;
+    margin: 1%;
+}
+@media (max-width: 450px) {
+    .card {
+        width: 30%;
+        margin: 1%;
+    }
 }
 .card:hover{
     transform: scale(1.1);
