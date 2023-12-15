@@ -12,7 +12,6 @@ def app():
 
 @pytest.fixture
 def client(app):
-    """Create client for testing."""
     return app.test_client()
 
 # Testing Flask routes
@@ -34,7 +33,7 @@ def test_get_card_list_error(client):
         response = client.get("/getCardList")
         assert response.status_code == 500
         assert 'error' in response.json
-        assert response.json['error'] == 'Error reading directory'
+        assert response.json['error'] == "Error reading directory"
 
 def test_add_record(client):
     """Test the addRecord route."""
@@ -53,16 +52,17 @@ def test_get_record(client):
         assert response.json['records'] == []
 
 # Mocking MongoDB interactions
-@patch('db.MongoClient')
-def test_save_to_leading_board(mock_mongo):
+@patch('db.collection.insert_one')
+def test_save_to_leading_board(mock_insert_one):
     """Test saving to the leaderboard."""
-    mock_mongo.return_value = MagicMock()
+    mock_insert_one.return_value = MagicMock()
     db.save_to_leading_board('TestPlayer', '00:01:23')
-    mock_mongo.assert_called_once()
+    mock_insert_one.assert_called_once()
 
-@patch('db.MongoClient')
-def test_get_leading_board(mock_mongo):
+@patch('db.collection.find')
+def test_get_leading_board(mock_find):
     """Test getting the leaderboard."""
-    mock_mongo.return_value = MagicMock()
-    db.get_leading_board()
-    mock_mongo.assert_called_once()
+    mock_find.return_value = []
+    records = db.get_leading_board()
+    assert records == []
+    mock_find.assert_called_once()
