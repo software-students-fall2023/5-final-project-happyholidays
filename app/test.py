@@ -5,7 +5,7 @@ from app import create_app
 
 @pytest.fixture
 def app():
-    app_instance = app.create_app()
+    app_instance = create_app()
     app_instance.config["TESTING"] = True
     return app_instance
 
