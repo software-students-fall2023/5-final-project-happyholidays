@@ -18,6 +18,10 @@ In root directory of the app.
 docker-compose build
 docker-compose up
 ```
+
+## Test Coverage
+![Local Image](coverage.png)
+
 ## Contributors
 
 - [@AlvisYan2025](https://github.com/AlvisYan2025)
