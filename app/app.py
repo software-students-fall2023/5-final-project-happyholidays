@@ -21,8 +21,9 @@ def get_card_list(directory_path = 'static/images/cards'):
         print('accessed card list')
         return jsonify({'cards': files})
     except Exception as e:
-        print(f"Error reading directory: {e}")
-        return jsonify({'error': e}), 500
+        error_message = str(e)
+        print(f"Error reading directory: {error_message}")
+        return jsonify({'error': error_message}), 500
 @app.route('/addRecord', methods=['POST'])
 def addNewRecord():
     #return jsonify({'new_record':'good'})
