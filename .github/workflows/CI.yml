@@ -37,4 +37,14 @@ jobs:
       run: |
         cd app
         pipenv run python -m pytest test.py
-    
+    - name: Login to DockerHub
+      run: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      env:
+        DOCKERHUB_USERNAME: catinthefridge
+        DOCKERHUB_PASSWORD: Yhy412518925
+    - name: Build and push Docker image
+      run: |
+        cd app
+        docker build -t catinthefridge/nye-ce . 
+        docker tag catinthefridge/nye-ce catinthefridge/nye-ce:latest
+        docker push catinthefridge/nye-ce:latest
