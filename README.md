@@ -1,3 +1,5 @@
+[![CI](https://github.com/software-students-fall2023/5-final-project-happyholidays/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/software-students-fall2023/5-final-project-happyholidays/actions/workflows/CI.yml)
+[![Deploy](https://github.com/software-students-fall2023/5-final-project-happyholidays/actions/workflows/CD.yml/badge.svg)](https://github.com/software-students-fall2023/5-final-project-happyholidays/actions/workflows/CD.yml)
 # Pykemon Match
 
 ## Description
