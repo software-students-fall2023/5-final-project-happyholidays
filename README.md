@@ -6,6 +6,12 @@
 
 Pykemon Match is a memorization matching game. At the beginning of the game, the player is presented with 8 Pokémon cards facing down. When the player clicks on a card, it flips to reveal the image of the Pokémon. The player can then click on another card. If the two cards match, they are canceled out. If the cards do not match, they flip back again. To win the game, the player must cancel out all the cards. A timer is provided to track how quickly a player can cancel out all the cards, and there is a leaderboard where the player can enter their time and compare their ranking with other players.
 
+## Webpage
+http://104.131.167.165:4000/
+
+## How To Play
+Click on any 2 cards to see if they match. Try to match them all as fast as you can.
+
 ## Steps to run
 In root directory of the app.
 ```bash
