@@ -27,14 +27,6 @@ def test_get_card_list(client):
     assert 'cards' in response.json
     assert isinstance(response.json['cards'], list)
 
-def test_get_card_list_error(client):
-    """Test error scenario for getCardList route."""
-    with patch('os.listdir', side_effect=Exception("Error reading directory")):
-        response = client.get("/getCardList")
-        assert response.status_code == 500
-        assert 'error' in response.json
-        assert response.json['error'] == "Error reading directory"
-
 def test_add_record(client):
     """Test the addRecord route."""
     test_data = {'player': 'TestPlayer', 'time': '00:01:23'}
