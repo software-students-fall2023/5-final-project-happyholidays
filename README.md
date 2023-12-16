@@ -8,9 +8,10 @@ Pykemon Match is a memorization matching game. At the beginning of the game, the
 
 ## Steps to run
 in root directory of the app.
-1. docker compose build.
-2. docker compose up.
-
+```bash
+docker compose build
+docker compose up
+```
 ## Contributors
 
 - [@AlvisYan2025](https://github.com/AlvisYan2025)
