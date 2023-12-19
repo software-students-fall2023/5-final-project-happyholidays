@@ -4,7 +4,7 @@
 
 ## Description
 
-Pykemon Match is a memorization matching game. At the beginning of the game, the player is presented with 8 Pokémon cards facing down. When the player clicks on a card, it flips to reveal the image of the Pokémon. The player can then click on another card. If the two cards match, they are canceled out. If the cards do not match, they flip back again. To win the game, the player must cancel out all the cards. A timer is provided to track how quickly a player can cancel out all the cards, and there is a leaderboard where the player can enter their time and compare their ranking with other players.
+Pykemon Match is a memorization matching game. At the beginning of the game, the player is presented with 8 Pokémon cards facing down. First, the player must select two cards by clicking on them with the mouse. The cards will then each reveal a Pokemon simultaneously. If the two cards match, they dissapear. If the cards do not match, they flip back over again (unlucky). To win the game, the player must remove all of the cards. A timer will track how quickly a player can match all of the cards, and there is a leaderboard where the player can enter their time and compare their ranking with other players. Pykemon Match is a fun game for players of all ages. Happy matching!
 
 ## Webpage
 http://104.131.167.165:4000/
