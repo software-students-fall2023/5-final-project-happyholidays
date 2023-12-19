@@ -1,0 +1,50 @@
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, closed]
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+        pipenv --python ${{ matrix.python-version }}
+        pipenv install flask
+        pipenv install flask-cors
+        pipenv install pymongo
+        pipenv install pytest
+        pipenv install --dev
+    - name: Turn on 'editable' mode
+      run: |
+        pipenv install -e .
+    - name: Test with pytest
+      run: |
+        cd app
+        pipenv run python -m pytest test.py
+    - name: Login to DockerHub
+      run: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      env:
+        DOCKERHUB_USERNAME: catinthefridge
+        DOCKERHUB_PASSWORD: Yhy412518925
+    - name: Build and push Docker image
+      run: |
+        cd app
+        docker build -t catinthefridge/nye-ce . 
+        docker tag catinthefridge/nye-ce catinthefridge/nye-ce:latest
+        docker push catinthefridge/nye-ce:latest

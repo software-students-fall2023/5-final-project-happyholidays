@@ -1,0 +1,35 @@
+#title{
+    color: black;
+    background-color: white;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+#timerDisplay{
+    background-color: white;
+}
+.card{
+    display: inline-block;
+    width: 200px;
+    height: auto;
+    margin: 1%;
+}
+@media (max-width: 450px) {
+    .card {
+        width: 30%;
+        margin: 1%;
+    }
+}
+.card:hover{
+    transform: scale(1.1);
+}
+.emphasis{
+    border: 3px solid #bace02; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+.hidden{
+    visibility: hidden;
+}
+.record{
+    color: black;
+    background-color: white;
+}
